@@ -9,12 +9,10 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -42,9 +40,11 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun DemoScreen(modifier: Modifier = Modifier) {
-    val customized = modifier
+    val firstModifier = modifier
         .padding(all = 10.dp)
         .border(width = 2.dp, color = Color.Black)
+
+    val secondModifier = Modifier.height(100.dp);
 
     Column(
         Modifier.padding(20.dp),
@@ -54,8 +54,8 @@ fun DemoScreen(modifier: Modifier = Modifier) {
         Text(
             "Hello Compose",
             fontSize = 40.sp,
-            modifier = customized,
-            fontWeight = FontWeight.Bold
+            fontWeight = FontWeight.Bold,
+            modifier = firstModifier.then(secondModifier)
         )
         Spacer(Modifier.height(16.dp))
         CustomImage(
