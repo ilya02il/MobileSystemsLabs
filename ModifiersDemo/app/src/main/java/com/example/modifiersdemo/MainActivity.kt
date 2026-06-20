@@ -10,7 +10,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.sp
 import com.example.modifiersdemo.ui.theme.ModifiersDemoTheme
 
 class MainActivity : ComponentActivity() {
@@ -19,29 +21,25 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             ModifiersDemoTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
+
             }
         }
     }
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
+fun DemoScreen(modifier: Modifier = Modifier) {
     Text(
-        text = "Hello $name!",
-        modifier = modifier
+        "Hello Compose",
+        fontSize = 40.sp,
+        fontWeight = FontWeight.Bold
     )
 }
 
-@Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
+@Preview(showBackground = true)
+fun DefaultPreview() {
     ModifiersDemoTheme {
-        Greeting("Android")
+        DemoScreen()
     }
 }
