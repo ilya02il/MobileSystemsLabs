@@ -47,8 +47,9 @@ fun DemoScreen(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun CustomImage(image: Int) {
+fun CustomImage(image: Int, modifier: Modifier) {
     Image(
+        modifier = modifier,
         contentDescription = null,
         painter = painterResource(image)
     )
