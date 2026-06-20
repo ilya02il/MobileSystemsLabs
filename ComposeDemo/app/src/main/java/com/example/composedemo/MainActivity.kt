@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -48,17 +49,6 @@ fun DemoText(message: String, fontSize: Float) {
         fontSize = fontSize.sp,
         fontWeight = FontWeight.Bold
     )
-}
-
-@Composable
-@Preview(showBackground = true)
-fun DemoTextPreview() {
-    ComposeDemoTheme {
-        DemoText(
-            fontSize = 12f,
-            message = "Welcome to Android"
-        )
-    }
 }
 
 @Composable
@@ -102,5 +92,17 @@ fun DemoScreen(modifier: Modifier = Modifier) {
             text = sliderPos.toInt().toString() + "sp",
             style = MaterialTheme.typography.headlineMedium
         )
+    }
+}
+
+@Composable
+@Preview(showSystemUi = true)
+fun DemoScreenPreview() {
+    ComposeDemoTheme {
+        Scaffold(modifier = Modifier.fillMaxSize()) {
+            padding -> DemoScreen(
+                modifier = Modifier.padding(padding)
+            )
+        }
     }
 }
