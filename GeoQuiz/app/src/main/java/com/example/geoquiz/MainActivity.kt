@@ -12,8 +12,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.NavigateNext
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -86,21 +89,39 @@ fun GeoQuizScreen() {
                 style = MaterialTheme.typography.bodyLarge
             )
             Spacer(modifier = Modifier.height(24.dp))
+            if (!answered) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Button(onClick = {
+                        if (questions[currentIndex].answer) score++
+                        answered = true
+                    }) {
+                        Text("TRUE")
+                    }
+                    Button(onClick = {
+                        if (!questions[currentIndex].answer) score++
+                        answered = true
+                    }) {
+                        Text("FALSE")
+                    }
+                }
+            }
+            Spacer(modifier = Modifier.height(8.dp))
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
+                horizontalArrangement = Arrangement.End
             ) {
                 Button(onClick = {
-                    if (questions[currentIndex].answer) score++
-                    answered = true
+                    currentIndex++
+                    answered = false
                 }) {
-                    Text("TRUE")
-                }
-                Button(onClick = {
-                    if (!questions[currentIndex].answer) score++
-                    answered = true
-                }) {
-                    Text("FALSE")
+                    Text("NEXT")
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.NavigateNext,
+                        contentDescription = null
+                    )
                 }
             }
         }
