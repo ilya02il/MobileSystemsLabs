@@ -20,7 +20,7 @@ abstract class ProductRoomDatabase : RoomDatabase() {
                         context.applicationContext,
                         ProductRoomDatabase::class.java,
                         "product_database"
-                    ).fallbackToDestructiveMigration()
+                    ).fallbackToDestructiveMigration(true)
                         .build()
                     INSTANCE = instance
                 }
