@@ -42,9 +42,9 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun MainScreen(modifier: Modifier = Modifier) {
-    Column(
-        modifier = modifier.height(400.dp),
-        verticalArrangement = Arrangement.Bottom
+    Row(
+        modifier = modifier.width(1000.dp),
+        horizontalArrangement = Arrangement.SpaceEvenly
     ) {
         TextCell("1")
         TextCell("2")
