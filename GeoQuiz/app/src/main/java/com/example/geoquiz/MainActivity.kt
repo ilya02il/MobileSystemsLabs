@@ -109,19 +109,21 @@ fun GeoQuizScreen() {
                 }
             }
             Spacer(modifier = Modifier.height(8.dp))
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.End
-            ) {
-                Button(onClick = {
-                    currentIndex++
-                    answered = false
-                }) {
-                    Text("NEXT")
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Filled.NavigateNext,
-                        contentDescription = null
-                    )
+            if (currentIndex < questions.lastIndex || !answered) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.End
+                ) {
+                    Button(onClick = {
+                        currentIndex++
+                        answered = false
+                    }) {
+                        Text("NEXT")
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.NavigateNext,
+                            contentDescription = null
+                        )
+                    }
                 }
             }
         }
