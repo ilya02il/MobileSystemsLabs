@@ -6,8 +6,10 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardOptions
@@ -62,6 +64,26 @@ fun BillAmountInput(value: String, onValueChange: (String) -> Unit) {
 }
 
 @Composable
+fun DishCountInput(value: String, onValueChange: (String) -> Unit) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Text(
+            text = "Количество блюд:",
+            modifier = Modifier.width(140.dp)
+        )
+        TextField(
+            value = value,
+            onValueChange = onValueChange,
+            modifier = Modifier.fillMaxWidth(),
+            singleLine = true,
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+        )
+    }
+}
+
+@Composable
 fun TipsCalculatorScreen(modifier: Modifier = Modifier) {
     var billAmount by remember { mutableStateOf("") }
     var dishCount by remember { mutableStateOf("") }
@@ -80,6 +102,8 @@ fun TipsCalculatorScreen(modifier: Modifier = Modifier) {
             .padding(16.dp)
     ) {
         BillAmountInput(value = billAmount, onValueChange = { billAmount = it })
+        Spacer(modifier = Modifier.height(8.dp))
+        DishCountInput(value = dishCount, onValueChange = { dishCount = it })
     }
 }
 
