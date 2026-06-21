@@ -12,10 +12,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.width
-import androidx.compose.material3.Slider
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.Scaffold
+import androidx.compose.material3.RadioButton
+import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -37,9 +38,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             TipsCalculatorTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    TipsCalculatorScreen(modifier = Modifier.padding(innerPadding))
-                }
+                TipsCalculatorScreen()
             }
         }
     }
@@ -106,6 +105,29 @@ fun TipSlider(value: Float, onValueChange: (Float) -> Unit) {
 }
 
 @Composable
+fun DiscountRadioGroup(selectedDiscount: Int) {
+    val options = listOf(3, 5, 7, 10)
+    Row(
+        verticalAlignment = Alignment.Top,
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Text(text = "Скидка:")
+        options.forEach { option ->
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.padding(horizontal = 12.dp)
+            ) {
+                RadioButton(
+                    selected = selectedDiscount == option,
+                    onClick = null
+                )
+                Text(text = "$option%")
+            }
+        }
+    }
+}
+
+@Composable
 fun TipsCalculatorScreen(modifier: Modifier = Modifier) {
     var billAmount by remember { mutableStateOf("") }
     var dishCount by remember { mutableStateOf("") }
@@ -121,6 +143,7 @@ fun TipsCalculatorScreen(modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
             .fillMaxSize()
+            .systemBarsPadding()
             .padding(16.dp)
     ) {
         BillAmountInput(value = billAmount, onValueChange = { billAmount = it })
@@ -128,11 +151,13 @@ fun TipsCalculatorScreen(modifier: Modifier = Modifier) {
         DishCountInput(value = dishCount, onValueChange = { dishCount = it })
         Spacer(modifier = Modifier.height(8.dp))
         TipSlider(value = tipPercent, onValueChange = { tipPercent = it })
+        Spacer(modifier = Modifier.height(8.dp))
+        DiscountRadioGroup(selectedDiscount = discountPercent)
     }
 }
 
-@Preview(showBackground = true)
 @Composable
+@Preview(showBackground = true)
 fun TipsCalculatorScreenPreview() {
     TipsCalculatorTheme {
         TipsCalculatorScreen()
