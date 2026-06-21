@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -12,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Slider
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -84,6 +86,26 @@ fun DishCountInput(value: String, onValueChange: (String) -> Unit) {
 }
 
 @Composable
+fun TipSlider(value: Float, onValueChange: (Float) -> Unit) {
+    Column(modifier = Modifier.fillMaxWidth()) {
+        Text(text = "Чаевые:")
+        Slider(
+            value = value,
+            onValueChange = onValueChange,
+            valueRange = 0f..25f,
+            modifier = Modifier.fillMaxWidth()
+        )
+        Row(
+            horizontalArrangement = Arrangement.SpaceBetween,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(text = "0")
+            Text(text = "25")
+        }
+    }
+}
+
+@Composable
 fun TipsCalculatorScreen(modifier: Modifier = Modifier) {
     var billAmount by remember { mutableStateOf("") }
     var dishCount by remember { mutableStateOf("") }
@@ -104,6 +126,8 @@ fun TipsCalculatorScreen(modifier: Modifier = Modifier) {
         BillAmountInput(value = billAmount, onValueChange = { billAmount = it })
         Spacer(modifier = Modifier.height(8.dp))
         DishCountInput(value = dishCount, onValueChange = { dishCount = it })
+        Spacer(modifier = Modifier.height(8.dp))
+        TipSlider(value = tipPercent, onValueChange = { tipPercent = it })
     }
 }
 
