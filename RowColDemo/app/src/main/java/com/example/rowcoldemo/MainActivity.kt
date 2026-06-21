@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -41,9 +42,9 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun MainScreen(modifier: Modifier = Modifier) {
-    Row(
-        modifier = modifier.width(250.dp),
-        horizontalArrangement = Arrangement.End
+    Column(
+        modifier = modifier.height(400.dp),
+        verticalArrangement = Arrangement.Bottom
     ) {
         TextCell("1")
         TextCell("2")
