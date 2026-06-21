@@ -19,6 +19,8 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
@@ -27,7 +29,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import kotlinx.coroutines.launch
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -63,6 +67,8 @@ fun GeoQuizScreen() {
     var currentIndex by remember { mutableIntStateOf(0) }
     var answered by remember { mutableStateOf(false) }
     var score by remember { mutableIntStateOf(0) }
+    val snackbarHostState = remember { SnackbarHostState() }
+    val coroutineScope = rememberCoroutineScope()
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -74,7 +80,8 @@ fun GeoQuizScreen() {
                     titleContentColor = MaterialTheme.colorScheme.onPrimary
                 )
             )
-        }
+        },
+        snackbarHost = { SnackbarHost(snackbarHostState) }
     ) { innerPadding ->
         Column(
             modifier = Modifier
@@ -97,12 +104,24 @@ fun GeoQuizScreen() {
                     Button(onClick = {
                         if (questions[currentIndex].answer) score++
                         answered = true
+                        if (currentIndex == questions.lastIndex) {
+                            val finalScore = score
+                            coroutineScope.launch {
+                                snackbarHostState.showSnackbar("Correct answers: $finalScore / ${questions.size}")
+                            }
+                        }
                     }) {
                         Text("TRUE")
                     }
                     Button(onClick = {
                         if (!questions[currentIndex].answer) score++
                         answered = true
+                        if (currentIndex == questions.lastIndex) {
+                            val finalScore = score
+                            coroutineScope.launch {
+                                snackbarHostState.showSnackbar("Correct answers: $finalScore / ${questions.size}")
+                            }
+                        }
                     }) {
                         Text("FALSE")
                     }
