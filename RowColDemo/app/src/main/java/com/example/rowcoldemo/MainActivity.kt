@@ -45,11 +45,13 @@ fun MainScreen(modifier: Modifier = Modifier) {
     Row {
         Text(
             text = "Large Text",
+            Modifier.alignByBaseline(),
             fontSize = 40.sp,
             fontWeight = FontWeight.Bold
         )
         Text(
             text = "Small Text",
+            Modifier.alignByBaseline(),
             fontSize = 32.sp,
             fontWeight = FontWeight.Bold
         )
