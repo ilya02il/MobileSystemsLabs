@@ -13,7 +13,9 @@ import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.gestures.draggable
 import androidx.compose.foundation.gestures.rememberDraggableState
 import androidx.compose.foundation.gestures.rememberScrollableState
+import androidx.compose.foundation.gestures.rememberTransformableState
 import androidx.compose.foundation.gestures.scrollable
+import androidx.compose.foundation.gestures.transformable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -37,6 +39,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.tooling.preview.Preview
@@ -61,7 +64,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun MainScreen(modifier: Modifier = Modifier) {
-    ScrollModifiers(modifier)
+    MultiTouchDemo(modifier)
 }
 
 @Composable
@@ -84,6 +87,35 @@ fun ClickDemo(modifier: Modifier = Modifier) {
             .background(bgColor)
             .size(100.dp)
     )
+}
+
+@Composable
+fun MultiTouchDemo(modifier: Modifier = Modifier) {
+    var scale by remember { mutableStateOf(1f) }
+    var angle by remember { mutableStateOf(0f) }
+    var offset by remember { mutableStateOf(Offset.Zero) }
+
+    val state = rememberTransformableState { scaleChange, offsetChange, rotationChange ->
+        scale *= scaleChange
+        angle += rotationChange
+        offset += offsetChange
+    }
+
+    Box(contentAlignment = Alignment.Center, modifier = modifier.fillMaxSize()) {
+        Box(
+            modifier
+                .graphicsLayer(
+                    scaleX = scale,
+                    scaleY = scale,
+                    rotationZ = angle,
+                    translationX = offset.x,
+                    translationY = offset.y
+                )
+                .transformable(state = state)
+                .background(Color.Blue)
+                .size(100.dp)
+        )
+    }
 }
 
 @Composable
